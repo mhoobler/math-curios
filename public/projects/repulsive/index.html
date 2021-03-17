@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='styles.css' />
+  </head>
+
+  <body>
+    <div id='controls-container'>
+      <button id='add-frame'>Add Frame</button>
+      <button id='run'>Run</button>
+    </div>
+    <canvas id='canvas'>
+    </canvas>
+  </body>
+
+  <script src='Setup.js'></script>
+  <script>
+
+    // Step one - get user inputs
+    document.getElementById('canvas').addEventListener('click', (evt) => {
+      console.log(inputCoords);
+      console.log(ctx.getImageData(0, 0, width, height));
+      inputCoords.push({ x: evt.clientX, y: evt.clientY });
+      getDistance();
+      console.log(distances.length);
+
+      render();
+    });
+
+
+    // 11111111 11111111 11111111 11111111
+    const what = Math.pow(16,9) * 15;
+    const alpha = 255 << 24;
+    const blue = 255 << 16;
+    const green = 255 << 8;
+    const red = 255;
+
+    const imageData = ctx.getImageData(0, 0, width, height);
+    const len = imageData.data.length;
+    const buf = new ArrayBuffer(len);
+    var buf8 = new Uint8ClampedArray(buf);
+    var buf32 = new Uint32Array(buf);
+    var xi = 20
+
+    const render = () => {
+      buf32.fill(0);
+      console.log('render');
+
+      if(distances.length > 0) {
+        console.log(distances);
+        for(let i=0; i<distances.length; i++){
+          let s = Math.floor(distances[i]);
+          if(s < xi){
+            buf32[i] = alpha + green;
+          }else {
+            buf32[i] = alpha;
+          }
+        }
+      }
+
+      if(xi < 35){ xi++ }else{ xi=20 }
+      imageData.data.set(buf8);
+      ctx.putImageData(imageData, 0, 0);
+
+      for(let coords of inputCoords){
+        ctx.beginPath();
+        ctx.fillStyle = "#FF0000";
+        ctx.arc( coords.x, coords.y, 5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if(RENDER){ window.requestAnimationFrame(render);}
+    }
+    window.requestAnimationFrame(render);
+
+
+
+    document.getElementById('add-frame').addEventListener('click', (evt) => {
+      render();
+    });
+
+    document.getElementById('run').addEventListener('click', (evt) => {
+      RENDER = true;
+      render();
+    });
+  </script>
+
+</html>
+
+
