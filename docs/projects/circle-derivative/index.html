@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+	  <link rel='stylesheet' href='styles.css' />
+  </head>
+
+  <body>
+    <div class='sidebar'>
+      <div id='controls'>
+        <h2>Controls</h2>
+        <form>
+          <label for='offset-control'>X Offset</label>
+          <div class='input-container'>
+            <input id='offset-control' name='offset' type='range' value='10000' min='0' max='30000' />
+            <span id='offset-value'>10000</span>
+          </div>
+          <label for='radius-control'>Radius</label>
+          <div class='input-container'>
+            <input id='radius-control' name='radius' type='range' value='10000' min='100' max='10000' />
+            <span id='radius-value'>10000</span>
+          </div>
+
+        </form>
+      </div>
+
+      <div id='results'>
+        <div>Distance: <span id='distance-result'></span></div>
+        <div>Slope: <span id='slope-result'></span></div>
+      </div>
+    </div>
+
+    <canvas id='canvas'></canvas>
+
+    <script src='script.js'></script>
+  </body>
+
+</html>
