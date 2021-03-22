@@ -2,7 +2,12 @@
 <html>
 
   <head>
-
+    <style>
+      .col {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
   </head>
 
   <body>
@@ -12,9 +17,11 @@
     <p>
       You'll need to re-enable javascript if you have it disabled
     </p>
-    <a id='circle-derivative' href='http://localhost:3000/circle-derivative'>Derivative of a Circle.</a>
-    <a id='repulsive' href='http://localhost:3000/repulsive'>Incase I ever need a single threaded frying pan.</a>
+    <div class='col'>
+      <a id='circle-derivative' href='http://localhost:3000/circle-derivative'>Derivative of a Circle.</a>
+      <a id='repulsive' href='http://localhost:3000/repulsive'>Incase I ever need a single threaded frying pan.</a>
+      <a id='left-shift' href='http://localhost:3000/left-shift'>Using the &lt;&lt; operand to help generate colors</a>
+    </div>
   </body>
 
-  <script src='./ghp.js'></script>
 </html>

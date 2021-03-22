@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="row">
+      <div class="color-container">
+        <button data-color="color" onclick="test(this)">Get Random</button>
+        <div id="random-color" class="color-preview"></div>
+      </div>
+
+      <div class="color-container">
+        <button data-color="red" onclick="test(this)">Get Random</button>
+        <div id="random-red" class="color-preview"></div>
+      </div>
+
+      <div class="color-container">
+        <button data-color="green" onclick="test(this)">Get Random</button>
+        <div id="random-green" class="color-preview"></div>
+      </div>
+
+      <div class="color-container">
+        <button class="text-center" data-color="blue" onclick="test(this)">
+          Get Random
+        </button>
+        <div id="random-blue" class="color-preview"></div>
+      </div>
+    </div>
+
+    <div id="details">
+      <p>
+        Live code example:
+        <a href="https://codesandbox.io/s/frosty-shaw-mrfjc"
+          >https://codesandbox.io/s/frosty-shaw-mrfjc</a
+        >
+      </p>
+      <dl>
+        <dt>So the two main elements this component relies on is:</dt>
+        <dd>- the left-shift bitwise operator ( &lt;&lt; )</dd>
+        <dd>- hexidecimal numbers</dd>
+        <br />
+
+        <dt>
+          I'm going to try and break down my thought process about the problem
+          and how I came up with my solution. Hopefully this doesn't come off as
+          too intimidating of a subject, it does involve math, but I try to
+          break everything down to it's simplest components.
+        </dt>
+        <br />
+        <!--{/* HEXIDECIMALS */}-->
+        <dt>
+          <h4>Hexidecimals</h4>
+        </dt>
+
+        <dt>
+          It was really trippy for me to go from dealing with Base-10 math to
+          Base-16 math.
+        </dt>
+        <br />
+
+        <dt>
+          Here's how I think about it now:
+          <sup>(Reminder: F == 15 in HEX)</sup>
+        </dt>
+        <div class="subsection">
+          <dt>BASE-N = 10:</dt>
+          <dd>-- 100 = 10 * 10</dd>
+          <dd>-- 99 = (9 * 10) + 9</dd>
+          <dt>BASE-N = 16:</dt>
+          <dd>-- 100 = 16 * 16;</dd>
+          <dd>-- FF = (15 * 16) + 15;</dd>
+        </div>
+        <br />
+
+        <dt>
+          Let that soak in a bit... okay, now notice how the 15's and the 9's
+          line up.
+        </dt>
+
+        <dt>
+          So if you want a VALUE to go left 1 space, you need to multiply it by
+          BASE-N. If you want it to go right, divide.
+        </dt>
+
+        <dt>
+          It might seem obvious to some people, but I think I spent a good 2
+          hours getting used to that and I hope that insight helps save other
+          mere mortals like myself some frustration.
+        </dt>
+
+        <dt>
+          Taking this back to how color strings work. Each color is valued in
+          base 16, and the largest value is:
+        </dt>
+        <div class="subsection">
+          <dd>- (15 * 16) + 15;</dd>
+          <dd>- which is also FF;</dd>
+          <dd>- which is also 255;</dd>
+        </div>
+        <br />
+
+        <dt>
+          It's just Red and Green are shifted (in CSS at least, in canvas it's
+          Blue and Green). So "pure Red" is:
+        </dt>
+        <div class="subsection">
+          <dd>- FF0000</dd>
+          <dd>- 255 with 4 BASE-16 shifts;</dd>
+          <dd>- 255 * (16 * 16 * 16 * 16) ;</dd>
+        </div>
+        <br/>
+
+        <!-- {/* BITWISE */} -->
+        <dt>
+          <h4>Left-shift Bitwise</h4>
+        </dt>
+
+        <dt>
+          It's pretty useful to think about (x &lt;&lt; y) as being similar to
+          (x * (2 ^ y)).
+        </dt>
+
+        <div class="subsection">
+          <dd>
+            It's more complicated than that (especially when getting into large
+            numbers or floats), but it's very useful to think about it like that
+            here.
+          </dd>
+        </div>
+
+        <dt>
+          I don't want to get too much into binary numbers, but the &lt;&lt;
+          operation shifts the binary array to the left (the &gt;&gt; shifts to
+          the right).
+        </dt>
+
+        <div class="subsection">
+          <dt>2 &lt;&lt; 1 = 4</dt>
+          <dd>- 0010 &lt;&lt; 0001 = 0100</dd>
+          <dt>2 &lt;&lt; 2 = 8</dt>
+          <dd>- 0010 &lt;&lt; 0010 = 1000</dd>
+          <dt>3 &lt;&lt; 2 = 12</dt>
+          <dd>- 0011 &lt;&lt; 0010 = 1100</dd>
+          <dd>- (3 * (2^2))</dd>
+        </div>
+        <br />
+
+        <!-- {/* CONCLUSION */} -->
+        <dt>
+          <h4>So bringing things together:</h4>
+        </dt>
+
+        <dt>You can sort of think of FF as 99.</dt>
+        <dt>
+          So if you want FF00 you do something very similar to if you wanted
+          9900.
+        </dt>
+
+        <div class="subsection">
+          <dt>9900 = (99 * 10 * 10);</dt>
+          <dt>FF00 = (FF * 16 * 16);</dt>
+        </div>
+        <br />
+
+        <dt>
+          The nice thing about hexidecial is that it fits nicely with binary.
+        </dt>
+
+        <div class="subsection">
+          <dt>FF00 = (FF * [4 * 4] * [4 * 4]);</dt>
+          <dt>FF00 = ( FF * [2 * 2 * 2 * 2] * [2 * 2 * 2 * 2] );</dt>
+        </div>
+
+        <dt>
+          And there's 8 two's so we can just throw them all together with a
+          power.
+        </dt>
+        <div class="subsection">
+          <dt>FF00 = ( FF * (2^8))</dt>
+        </div>
+        <dt>
+          Going back to the left-shift, if you remember (x &lt;&lt; y), this is
+          doing exactly the same thing as (FF &lt;&lt; 8) or (255 &lt;&lt; 8)
+        </dt>
+        <br />
+
+        <!-- {/* POST SCRIPT */} -->
+        <dt>
+          <h4>Some final thoughts and words of encouragement</h4>
+        </dt>
+
+        <dt>
+          So I started figuring all this stuff out by playing around with the
+          code found
+          <a
+            href="https://compile.fi/canvas-filled-three-ways-js-webassembly-and-webgl/"
+            >here</a
+          >
+          and trying to get a better understanding of the canvas element and
+          webassembly.
+        
+          I think I spent around 6-10 hours playing around with the code (aka
+          bashing my head against a wall) spread across a week before I really
+          got an understanding of what was going on at even a basic level.
+        </dt>
+
+        <dt>
+          What I'm trying to say is that it's okay to find stuff like this hard.
+          Back in the day, I would've spent 4 hours straight going nowhere,
+          getting frustrated to the point of burnout, and then quit programming
+          for a month or more. Take a break, work on something else, or
+          reach-out and ask a question. As long as you keep trying you'll get
+          there
+          <span role="img" aria-label="smile"> 🙂 </span>
+          .
+        </dt>
+      </dl>
+    </div>
+  </body>
+
+  <script>
+    const getRandom = () => {
+      // We really don't need 3 different values here,
+      //   we could multiply Math.random with white (aka 16777215 or parseInt("FFFFFF", 16)).
+      // I have three values here to better illustrate what's goin on,
+      //   and we have 3 different calls to Math.random() here so that we're not just getting a random shade of gray
+      const red = Math.floor(Math.random() * 256);
+      const green = Math.floor(Math.random() * 256);
+      const blue = Math.floor(Math.random() * 256);
+
+      // If `red` `green` and `blue` values were all 255,
+      //   we would get FFFFFF which is white
+      let string = ((red << 16) + (green << 8) + blue).toString(16);
+    };
+
+    const getShade = (baseColor) => {
+      const rand = Math.floor(Math.random() * 256);
+      var string = "";
+      switch (baseColor) {
+        case "red": {
+          string = ((255 << 16) + (rand << 8) + rand).toString(16);
+          break;
+        }
+        case "green": {
+          string = ((255 << 8) + (rand << 16) + rand).toString(16);
+          break;
+        }
+        case "blue": {
+          string = (255 + (rand << 16) + (rand << 8)).toString(16);
+          break;
+        }
+        case "color": {
+          string = Math.floor(Math.random() * 16777215).toString(16);
+          break;
+        }
+        default:
+          throw new Error("invalid baseColor prop");
+      }
+
+      document.getElementById(
+        `random-${baseColor}`
+      ).style.backgroundColor = `#${string}`;
+    };
+
+    const test = (evt) => {
+      const selected = evt.dataset.color;
+      getShade(selected);
+    };
+
+    getShade("color");
+    getShade("red");
+    getShade("green");
+    getShade("blue");
+  </script>
+</html>

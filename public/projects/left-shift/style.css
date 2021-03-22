@@ -1,0 +1,70 @@
+html,
+body {
+  margin: 0;
+  background-color: #223;
+  color: #fdfde1;
+  font-family: "Lucida Console", monospace;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  height: 200px;
+  margin-bottom: 72px;
+  background-color: white;
+}
+
+.color-container {
+  text-align: center;
+  height: 100%;
+  width: 25%;
+}
+
+.color-container > button {
+  width: 100%;
+}
+
+.color-preview {
+  height: 200px;
+  width: 100%;
+}
+
+h4 {
+  margin: 0;
+  color: #3f3;
+}
+
+.text-center {
+  text-align: center;
+}
+
+#details {
+  width: 60%;
+  margin: 0 auto;
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+a {
+  color: #fdfd83;
+}
+
+dt {
+  font-size: 1.2rem;
+  margin-bottom: 0.6rem;
+}
+
+.subsection {
+  font-size: 0.9rem;
+  font-weight: lighter;
+  margin-top: -0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.subsection > dt {
+  font-size: 0.9rem;
+  margin-left: 1rem;
+  margin-bottom: 0;
+}
