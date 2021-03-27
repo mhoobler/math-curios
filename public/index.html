@@ -3,25 +3,35 @@
 
   <head>
     <style>
-      .col {
-        display: flex;
-        flex-direction: column;
+      html,
+      body {
+        margin: 0;
+        background-color: #223;
+        color: #fdfde1;
+        font-family: "Lucida Console", monospace;
+      }
+      p {
+        font-size: 1.2rem;
+      }
+
+      a {
+        color: #fdfd83;
       }
     </style>
   </head>
 
   <body>
     <p>
-      A simple site showcasing some of the math-y stuff I've done. (Still remaking a some older stuff)
+      A simple site showcasing some of the math-y stuff I've done.
     </p>
-    <p>
-      You'll need to re-enable javascript if you have it disabled
-    </p>
-    <div class='col'>
-      <a id='circle-derivative' href='http://localhost:3000/circle-derivative'>Derivative of a Circle.</a>
-      <a id='repulsive' href='http://localhost:3000/repulsive'>Incase I ever need a single threaded frying pan.</a>
-      <a id='left-shift' href='http://localhost:3000/left-shift'>Using the &lt;&lt; operand to help generate colors</a>
-    </div>
+    <dd>
+      You'll need to enable javascript if you have it disabled
+    </dd>
+    <ul class='col'>
+      <li><a class='needs-href' id='circle-derivative' href='http://localhost:3000/circle-derivative'>Derivative of a Circle.</a></li>
+      <li><a class='needs-href' id='repulsive' href='http://localhost:3000/repulsive'>Incase I ever need a single threaded frying pan.</a></li>
+      <li><a class='needs-href' id='left-shift' href='http://localhost:3000/left-shift'>Using the &lt;&lt; operand to help generate colors</a></li>
+    </ul>
 
     <script src='./ghp.js'></script>
   </body>

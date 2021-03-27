@@ -50,6 +50,17 @@ body{
   align-items: flex-start;
 }
 
+#results > * {
+  margin-bottom: 0.25rem;
+}
+
+#distance-result {
+  border-bottom: 2px solid red;
+}
+
+#slope-result {
+  border-bottom: 2px solid blue;
+}
 
 /* Canvas */
 #canvas {
