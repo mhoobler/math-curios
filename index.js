@@ -1,10 +1,10 @@
 const express = require("express");
 const app = express();
-const path = __dirname + "/public/projects/circle-derivative";
-const path2 = __dirname + "/public/projects/repulsive";
-const path3 = __dirname + "/public/projects/left-shift";
+const path = __dirname + "/docs/projects/circle-derivative";
+const path2 = __dirname + "/docs/projects/repulsive";
+const path3 = __dirname + "/docs/projects/left-shift";
 
-app.use(express.static("./public"));
+app.use(express.static("./docs"));
 app.use("/circle-derivative", express.static(path));
 app.use("/repulsive", express.static(path2));
 app.use("/left-shift", express.static(path3));
